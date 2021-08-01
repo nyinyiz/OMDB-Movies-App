@@ -1,14 +1,18 @@
 package com.infotech.assignment.nyinyi.omdbmoviesapp.data.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.infotech.assignment.nyinyi.omdbmoviesapp.BuildConfig
 import com.infotech.assignment.nyinyi.omdbmoviesapp.data.local.db.AppDatabase
 import com.infotech.assignment.nyinyi.omdbmoviesapp.data.local.entity.Movie
 import com.infotech.assignment.nyinyi.omdbmoviesapp.data.remote.api.MoviesApi
 import com.infotech.assignment.nyinyi.omdbmoviesapp.data.remote.remoteMediator.MoviesRemoteMediator
+import com.infotech.assignment.nyinyi.omdbmoviesapp.models.MovieDetailResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -37,8 +41,9 @@ class MovieRepository @Inject constructor(
             ),
             pagingSourceFactory = pagingSourceFactory
         ).flow
-
     }
+
+    suspend fun getMovieDetail(imdbId: String) = moviesApi.getMovieDetail(BuildConfig.API_KEY, imdbId)
 
     companion object {
         private const val NETWORK_PAGE_SIZE = 10

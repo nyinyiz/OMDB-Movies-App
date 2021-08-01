@@ -3,6 +3,7 @@ package com.infotech.assignment.nyinyi.omdbmoviesapp.navigator
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.infotech.assignment.nyinyi.omdbmoviesapp.R
+import com.infotech.assignment.nyinyi.omdbmoviesapp.ui.movies.detail.MovieDetailFragment
 import com.infotech.assignment.nyinyi.omdbmoviesapp.ui.movies.list.MovieListFragment
 import javax.inject.Inject
 
@@ -12,7 +13,7 @@ class ApplicationNavigatorImpl @Inject constructor(private val activity: Fragmen
 
         val fragment = when (screen) {
             Screens.MOVIES_LIST -> MovieListFragment()
-            Screens.MOVIES_DETAIL -> MovieListFragment()
+            Screens.MOVIES_DETAIL -> MovieDetailFragment()
         }.apply {
             arguments = args
         }

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +17,7 @@ import com.infotech.assignment.nyinyi.omdbmoviesapp.R
 import com.infotech.assignment.nyinyi.omdbmoviesapp.data.local.entity.Movie
 import com.infotech.assignment.nyinyi.omdbmoviesapp.databinding.FragmentMovieListBinding
 import com.infotech.assignment.nyinyi.omdbmoviesapp.navigator.ApplicationNavigator
+import com.infotech.assignment.nyinyi.omdbmoviesapp.navigator.Screens
 import com.infotech.assignment.nyinyi.omdbmoviesapp.ui.adapter.MovieAdapter
 import com.infotech.assignment.nyinyi.omdbmoviesapp.ui.adapter.MovieLoadingStateAdapter
 import com.infotech.assignment.nyinyi.omdbmoviesapp.utils.UiAction
@@ -37,7 +39,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     private val binding get() = _binding!!
 
     private val adapter = MovieAdapter { movie: Movie ->
-        Toast.makeText(requireContext(), movie.title, Toast.LENGTH_SHORT).show()
+        navigator.navigateTo(Screens.MOVIES_DETAIL, bundleOf("id" to movie.imdbID))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
