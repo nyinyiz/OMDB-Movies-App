@@ -1,0 +1,2 @@
+rootProject.name = "OMDB Movies App"
+include ':app'
