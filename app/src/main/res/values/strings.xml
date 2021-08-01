@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">OMDB Movies App</string>
+
+    <string name="retry">Retry</string>
+    <string name="action_profile">Profile</string>
+    <string name="search_label">Search movies ...</string>
+    <string name="movies_title">OMDB</string>
+
 </resources>

@@ -19,6 +19,6 @@
     <color name="settings_divider_grey">#DBDBDB</color>
     <color name="blue_doc">#517ec5</color>
 
-    <color name="boxStrokeColor">#80000000</color>
-    <color name="hintTextColor">#33000000</color>
+    <color name="boxStrokeColor">#FFFFFFFF</color>
+    <color name="hintTextColor">#FFFFFFFF</color>
 </resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="?attr/selectableItemBackground">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/ivMovie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@android:color/darker_gray"
+            android:scaleType="centerCrop"
+            android:layout_above="@id/title"
+            android:padding="2dp"
+            android:contentDescription="Movie poster avatar" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Hello Title"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="12sp"
+            android:layout_alignParentBottom="true"/>
+
+
+    </RelativeLayout>
+</layout>
