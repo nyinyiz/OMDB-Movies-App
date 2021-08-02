@@ -51,7 +51,7 @@ class MovieAdapter(private val clicked: (Movie) -> Unit) :
                         .apply(RequestOptions.bitmapTransform(multi))
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(it.ivMovie)
-                }else {
+                } else {
 
                     Glide.with(it.root)
                         .load(data?.poster)

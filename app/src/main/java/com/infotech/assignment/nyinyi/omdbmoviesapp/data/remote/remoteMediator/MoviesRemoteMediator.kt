@@ -22,7 +22,6 @@ class MoviesRemoteMediator(
     private val type: String
 ) : RemoteMediator<Int, Movie>() {
 
-
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
@@ -68,9 +67,9 @@ class MoviesRemoteMediator(
                 val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
 
-                if(moviesList.isNullOrEmpty()) {
+                if (moviesList.isNullOrEmpty()) {
                     MediatorResult.Error(Throwable(apiResponse.error))
-                }else {
+                } else {
 
                     val keys = moviesList?.map {
                         RemoteKeys(
@@ -85,15 +84,16 @@ class MoviesRemoteMediator(
 
                     if (apiResponse.error.isNullOrEmpty()) {
                         val itemList = moviesList.map {
-                            it.copy(querysearch =
-                            search)
+                            it.copy(
+                                querysearch =
+                                search
+                            )
                         }
                         db.moviesDao.insertMultipleMovies(itemList)
                     } else {
                         MediatorResult.Error(Throwable(apiResponse.error))
                     }
                 }
-
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {

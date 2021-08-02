@@ -1,9 +1,7 @@
 package com.infotech.assignment.nyinyi.omdbmoviesapp.data.remote.api
 
-import androidx.lifecycle.LiveData
 import com.infotech.assignment.nyinyi.omdbmoviesapp.models.MovieDetailResponse
 import com.infotech.assignment.nyinyi.omdbmoviesapp.models.MoviesData
-import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
 

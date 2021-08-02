@@ -37,15 +37,13 @@ class MovieDetailViewModel @Inject constructor(
                     }
                 }
             }
-        }catch (e : Exception) {
+        } catch (e: Exception) {
             detailData.postValue(Resource.error(e.localizedMessage, null))
         }
-
     }
 
     fun selectItem(id: String) {
         selectedItemId.value = id
         getMoviesDetail()
     }
-
 }

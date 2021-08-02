@@ -19,5 +19,4 @@ class Prefs(private val prefs: SharedPreferences) {
     fun setQuery(selectedCountry: String) {
         prefs.edit().putString(KEY_QUERY, selectedCountry).commit()
     }
-
 }

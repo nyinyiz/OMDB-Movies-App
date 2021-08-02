@@ -2,10 +2,8 @@ package com.infotech.assignment.nyinyi.omdbmoviesapp.ui.movies.list
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -67,14 +65,12 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
         }
 
         bindState(viewModel.state, viewModel.accept)
-
     }
 
     private fun bindState(uiState: StateFlow<UiState>, uiAction: (UiAction) -> Unit) {
 
         setUpAdapter(uiState)
         setUpSearch(uiState, uiAction)
-
     }
 
     private fun setUpSearch(
@@ -156,7 +152,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
                     val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
 
-                binding.errorTxt.isVisible = isListEmpty
+                    binding.errorTxt.isVisible = isListEmpty
                     binding.progress.isVisible = loadState.mediator?.refresh is LoadState.Loading
                     binding.btnRetry.isVisible = loadState.mediator?.refresh is LoadState.Error && adapter.itemCount == 0
                     val errorState = loadState.source.append as? LoadState.Error
@@ -164,13 +160,10 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
                         ?: loadState.append as? LoadState.Error
                         ?: loadState.prepend as? LoadState.Error
                     errorState?.let {
-
                     }
                 }
-            }catch (e : Exception) {
-
+            } catch (e: Exception) {
             }
-
         }
 
         binding.let {
@@ -179,7 +172,6 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
                 retry()
             }
         }
-
     }
 
     private fun retry() {

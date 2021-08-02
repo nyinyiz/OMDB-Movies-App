@@ -36,14 +36,12 @@ class MovieListViewModel @Inject constructor(
         val queriesScrolled = actionStateFlow
             .filterIsInstance<UiAction.Scroll>()
             .distinctUntilChanged()
-
             .shareIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
                 replay = 1
             )
             .onStart { emit(UiAction.Scroll(currentQuery = lastQueryScrolled)) }
-
 
         state = searches
             .flatMapLatest { search ->

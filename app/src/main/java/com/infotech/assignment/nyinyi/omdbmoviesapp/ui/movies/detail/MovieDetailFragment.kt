@@ -7,7 +7,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -21,7 +20,7 @@ import com.infotech.assignment.nyinyi.omdbmoviesapp.utils.Status
 import com.infotech.assignment.nyinyi.omdbmoviesapp.utils.isNetworkAvailable
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -50,30 +49,33 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
         }
 
         if (requireContext().isNetworkAvailable()) {
-            viewModel.data.observe(viewLifecycleOwner, Observer {
-                when (it.status) {
-                    Status.LOADING -> {
-                        binding.rlLoading.isVisible = true
-                        binding.progress.isVisible = true
-                        binding.scrollView.isVisible = false
-                    }
-                    Status.SUCCESS -> {
+            viewModel.data.observe(
+                viewLifecycleOwner,
+                Observer {
+                    when (it.status) {
+                        Status.LOADING -> {
+                            binding.rlLoading.isVisible = true
+                            binding.progress.isVisible = true
+                            binding.scrollView.isVisible = false
+                        }
+                        Status.SUCCESS -> {
 
-                        binding.rlLoading.isVisible = false
-                        binding.progress.isVisible = false
-                        binding.scrollView.isVisible = true
-                        bindDetailData(it.data)
-                    }
-                    Status.ERROR -> {
+                            binding.rlLoading.isVisible = false
+                            binding.progress.isVisible = false
+                            binding.scrollView.isVisible = true
+                            bindDetailData(it.data)
+                        }
+                        Status.ERROR -> {
 
-                        binding.rlLoading.isVisible = true
-                        binding.progress.isVisible = false
-                        binding.tvError.text = it?.message ?: "No Response"
-                        binding.scrollView.isVisible = false
+                            binding.rlLoading.isVisible = true
+                            binding.progress.isVisible = false
+                            binding.tvError.text = it?.message ?: "No Response"
+                            binding.scrollView.isVisible = false
+                        }
                     }
                 }
-            })
-        }else {
+            )
+        } else {
 
             binding.rlLoading.isVisible = true
             binding.progress.isVisible = false
@@ -133,13 +135,10 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
         binding.tvWriter.text = data?.writer
         binding.tvLanguage.text = data?.language
         binding.tvAwards.text = data?.awards
-
     }
 
     override fun onDestroy() {
         myJob?.cancel()
         super.onDestroy()
     }
-
-
 }

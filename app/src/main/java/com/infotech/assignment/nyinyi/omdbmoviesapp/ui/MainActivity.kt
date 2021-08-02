@@ -1,8 +1,8 @@
 package com.infotech.assignment.nyinyi.omdbmoviesapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import com.infotech.assignment.nyinyi.omdbmoviesapp.R
 import com.infotech.assignment.nyinyi.omdbmoviesapp.navigator.ApplicationNavigator
