@@ -16,6 +16,7 @@ It simply loads movies data from API and store it in persistence storage (i.e. R
 It simply loads **Movies** data from API and stores it in persistence storage (i.e. Room Database). Movies will be always loaded from local database. Remote data (from API) and Local data is always synchronized. Used the Modern Android development tools - (Kotlin, Coroutines, Flow, Hilt, Architecture Components, MVVM, Room, Retrofit, Material Components).
 
 - This makes it offline capable. 
+- Pagination support.
 - Clean and Simple Material UI.
 - It supports dark theme too.
 - It supports dynamic UI view by orientation changes or devices size.
