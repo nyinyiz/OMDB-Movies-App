@@ -1,11 +1,13 @@
 package com.infotech.assignment.nyinyi.omdbmoviesapp.di
 
 import android.content.Context
+import android.preference.PreferenceManager
 import com.infotech.assignment.nyinyi.omdbmoviesapp.BuildConfig
 import com.infotech.assignment.nyinyi.omdbmoviesapp.data.local.dao.MoviesDao
 import com.infotech.assignment.nyinyi.omdbmoviesapp.data.local.dao.RemoteKeysDao
 import com.infotech.assignment.nyinyi.omdbmoviesapp.data.local.db.AppDatabase
 import com.infotech.assignment.nyinyi.omdbmoviesapp.data.remote.api.MoviesApi
+import com.infotech.assignment.nyinyi.omdbmoviesapp.utils.Prefs
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,4 +56,8 @@ object AppModule {
     @Singleton
     fun provideMoviesApi(retrofit: Retrofit): MoviesApi =
         retrofit.create(MoviesApi::class.java)
+
+    @Provides
+    @Singleton
+    fun providePrefs(@ApplicationContext context: Context) = Prefs(PreferenceManager.getDefaultSharedPreferences(context))
 }

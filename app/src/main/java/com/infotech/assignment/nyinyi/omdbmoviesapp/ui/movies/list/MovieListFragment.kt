@@ -20,6 +20,7 @@ import com.infotech.assignment.nyinyi.omdbmoviesapp.navigator.ApplicationNavigat
 import com.infotech.assignment.nyinyi.omdbmoviesapp.navigator.Screens
 import com.infotech.assignment.nyinyi.omdbmoviesapp.ui.adapter.MovieAdapter
 import com.infotech.assignment.nyinyi.omdbmoviesapp.ui.adapter.MovieLoadingStateAdapter
+import com.infotech.assignment.nyinyi.omdbmoviesapp.utils.Prefs
 import com.infotech.assignment.nyinyi.omdbmoviesapp.utils.UiAction
 import com.infotech.assignment.nyinyi.omdbmoviesapp.utils.UiState
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +32,9 @@ import javax.inject.Inject
 class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
     private val viewModel: MovieListViewModel by viewModels()
+
+    @Inject
+    lateinit var prefs: Prefs
 
     @Inject
     lateinit var navigator: ApplicationNavigator
@@ -109,6 +113,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     private fun updateMovieListByInput(query: String, onQueryChanged: (UiAction.Search) -> Unit) {
         binding.allMoviesRecyclerView.scrollToPosition(0)
         onQueryChanged(UiAction.Search(query))
+        prefs.setQuery(query)
     }
 
     private fun setUpAdapter(
@@ -124,8 +129,6 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
                 adapter.submitData(it)
             }
         }
-
-        Log.d("Movie LIst", "Size : ${adapter.itemCount}")
 
         binding.allMoviesRecyclerView.apply {
 
@@ -143,34 +146,31 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
         )
 
         lifecycleScope.launch {
-            adapter.loadStateFlow.collectLatest { loadState ->
+            try {
+                adapter.loadStateFlow.collectLatest { loadState ->
 
-                header.loadState = loadState.mediator
-                    ?.refresh
-                    ?.takeIf { it is LoadState.Error && adapter.itemCount > 0 }
-                    ?: loadState.prepend
+                    header.loadState = loadState.mediator
+                        ?.refresh
+                        ?.takeIf { it is LoadState.Error && adapter.itemCount > 0 }
+                        ?: loadState.prepend
 
-                val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
-                // show empty list
+                    val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
+
                 binding.errorTxt.isVisible = isListEmpty
-                // Only show the list if refresh succeeds, either from the the local db or the remote.
-//                binding.allMoviesRecyclerView.isVisible =  loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
-                // Show loading spinner during initial load or refresh.
-                binding.progress.isVisible = loadState.mediator?.refresh is LoadState.Loading
-                // Show the retry state if initial load or refresh fails.
-                binding.btnRetry.isVisible = loadState.mediator?.refresh is LoadState.Error && adapter.itemCount == 0
-                // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
-                val errorState = loadState.source.append as? LoadState.Error
-                    ?: loadState.source.prepend as? LoadState.Error
-                    ?: loadState.append as? LoadState.Error
-                    ?: loadState.prepend as? LoadState.Error
-                errorState?.let {
-                    Toast.makeText(requireContext(),
-                        "\uD83D\uDE28 Wooops ${it.error}",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    binding.progress.isVisible = loadState.mediator?.refresh is LoadState.Loading
+                    binding.btnRetry.isVisible = loadState.mediator?.refresh is LoadState.Error && adapter.itemCount == 0
+                    val errorState = loadState.source.append as? LoadState.Error
+                        ?: loadState.source.prepend as? LoadState.Error
+                        ?: loadState.append as? LoadState.Error
+                        ?: loadState.prepend as? LoadState.Error
+                    errorState?.let {
+
+                    }
                 }
+            }catch (e : Exception) {
+
             }
+
         }
 
         binding.let {

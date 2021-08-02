@@ -27,15 +27,20 @@ class MovieDetailViewModel @Inject constructor(
 
     private fun getMoviesDetail() = viewModelScope.launch {
         detailData.postValue(Resource.loading(null))
-        selectedItemId.value?.let {
-            repository.getMovieDetail(it).let { detailResponse ->
-                if (detailResponse.response) {
-                    detailData.postValue(Resource.success(detailResponse))
-                } else {
-                    detailData.postValue(Resource.error(detailResponse.error, null))
+        try {
+            selectedItemId.value?.let {
+                repository.getMovieDetail(it).let { detailResponse ->
+                    if (detailResponse.response) {
+                        detailData.postValue(Resource.success(detailResponse))
+                    } else {
+                        detailData.postValue(Resource.error(detailResponse.error, null))
+                    }
                 }
             }
+        }catch (e : Exception) {
+            detailData.postValue(Resource.error(e.localizedMessage, null))
         }
+
     }
 
     fun selectItem(id: String) {

@@ -73,7 +73,6 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:text="@android:string/untitled"
-                    android:textColor="@color/primary_text"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 

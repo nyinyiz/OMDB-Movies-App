@@ -1,6 +1,8 @@
 package com.infotech.assignment.nyinyi.omdbmoviesapp.ui.movies.list
 
-import androidx.lifecycle.*
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -16,15 +18,16 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
     private val repository: MovieRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val prefs: Prefs
 ) : ViewModel() {
 
     val state: StateFlow<UiState>
     val accept: (UiAction) -> Unit
 
     init {
-        val initialQuery: String = savedStateHandle.get(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
-        val lastQueryScrolled: String = savedStateHandle.get(LAST_QUERY_SCROLLED) ?: DEFAULT_QUERY
+        val initialQuery: String = savedStateHandle.get(LAST_SEARCH_QUERY) ?: prefs.getQuery()
+        val lastQueryScrolled: String = savedStateHandle.get(LAST_QUERY_SCROLLED) ?: prefs.getQuery()
         val actionStateFlow = MutableSharedFlow<UiAction>()
         val searches = actionStateFlow
             .filterIsInstance<UiAction.Search>()
@@ -76,7 +79,7 @@ class MovieListViewModel @Inject constructor(
         super.onCleared()
     }
 
-    private fun searchMovies(searchValue: String): Flow<PagingData<Movie>>  {
+    private fun searchMovies(searchValue: String): Flow<PagingData<Movie>> {
         return repository.getMovies(
             searchValue,
             DEFAULT_TYPE
