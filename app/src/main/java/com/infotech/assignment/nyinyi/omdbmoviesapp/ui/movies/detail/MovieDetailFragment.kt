@@ -3,8 +3,10 @@ package com.infotech.assignment.nyinyi.omdbmoviesapp.ui.movies.detail
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -15,6 +17,8 @@ import com.infotech.assignment.nyinyi.omdbmoviesapp.R
 import com.infotech.assignment.nyinyi.omdbmoviesapp.databinding.FragmentMovieDetailBinding
 import com.infotech.assignment.nyinyi.omdbmoviesapp.models.MovieDetailResponse
 import com.infotech.assignment.nyinyi.omdbmoviesapp.navigator.ApplicationNavigator
+import com.infotech.assignment.nyinyi.omdbmoviesapp.utils.Status
+import com.infotech.assignment.nyinyi.omdbmoviesapp.utils.isNetworkAvailable
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.coroutines.*
@@ -45,8 +49,30 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
             activity?.onBackPressed()
         }
 
-        viewModel.movieResponse.observe(viewLifecycleOwner) {
-            bindDetailData(it)
+        if (requireContext().isNetworkAvailable()) {
+            viewModel.data.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    Status.LOADING -> {
+                        binding.rlLoading.isVisible = true
+                        binding.progress.isVisible = true
+                        binding.scrollView.isVisible = false
+                    }
+                    Status.SUCCESS -> {
+
+                        binding.rlLoading.isVisible = false
+                        binding.progress.isVisible = false
+                        binding.scrollView.isVisible = true
+                        bindDetailData(it.data)
+                    }
+                    Status.ERROR -> {
+
+                        binding.rlLoading.isVisible = true
+                        binding.progress.isVisible = false
+                        binding.tvError.text = it?.message ?: "No Respnose"
+                        binding.scrollView.isVisible = false
+                    }
+                }
+            })
         }
     }
 
