@@ -68,11 +68,17 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
 
                         binding.rlLoading.isVisible = true
                         binding.progress.isVisible = false
-                        binding.tvError.text = it?.message ?: "No Respnose"
+                        binding.tvError.text = it?.message ?: "No Response"
                         binding.scrollView.isVisible = false
                     }
                 }
             })
+        }else {
+
+            binding.rlLoading.isVisible = true
+            binding.progress.isVisible = false
+            binding.tvError.text = "No internet connection."
+            binding.scrollView.isVisible = false
         }
     }
 
@@ -112,6 +118,22 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
         }
 
         binding.tvTitle.text = data?.title
+        binding.tvYear.text = data?.year
+
+        binding.tvReview.text = data?.imdbRating ?: "0"
+        binding.tvReviewTitle.text = getString(R.string.review_count, data?.imdbVotes)
+
+        binding.tvRating.text = data?.rated
+        binding.tvDuration.text = data?.runtime
+        binding.tvRelease.text = data?.released
+        binding.tvGenre.text = data?.genre
+        binding.tvAbout.text = data?.plot
+        binding.tvActors.text = data?.actors
+        binding.tvDirector.text = data?.director
+        binding.tvWriter.text = data?.writer
+        binding.tvLanguage.text = data?.language
+        binding.tvAwards.text = data?.awards
+
     }
 
     override fun onDestroy() {

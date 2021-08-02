@@ -20,7 +20,7 @@ data class MovieDetailResponse (
 	@SerializedName("Poster") val poster : String,
 	@SerializedName("Ratings") val ratings : List<Ratings>,
 	@SerializedName("Metascore") val metascore : String,
-	@SerializedName("imdbRating") val imdbRating : Double,
+	@SerializedName("imdbRating") val imdbRating : String,
 	@SerializedName("imdbVotes") val imdbVotes : String,
 	@SerializedName("imdbID") val imdbID : String,
 	@SerializedName("Type") val type : String,

@@ -6,4 +6,9 @@
     <string name="search_label">Search movies ...</string>
     <string name="movies_title">OMDB</string>
 
+    <string name="review_count">%s reviews</string>
+    <string name="cast_credits"><![CDATA[Cast & credits]]></string>
+    <string name="about_this_movie">About this movie</string>
+    <string name="movie_info">Movie info</string>
+
 </resources>
