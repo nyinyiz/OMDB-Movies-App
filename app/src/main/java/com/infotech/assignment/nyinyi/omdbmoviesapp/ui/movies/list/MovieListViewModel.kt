@@ -27,7 +27,8 @@ class MovieListViewModel @Inject constructor(
 
     init {
         val initialQuery: String = savedStateHandle.get(LAST_SEARCH_QUERY) ?: prefs.getQuery()
-        val lastQueryScrolled: String = savedStateHandle.get(LAST_QUERY_SCROLLED) ?: prefs.getQuery()
+        val lastQueryScrolled: String =
+            savedStateHandle.get(LAST_QUERY_SCROLLED) ?: prefs.getQuery()
         val actionStateFlow = MutableSharedFlow<UiAction>()
         val searches = actionStateFlow
             .filterIsInstance<UiAction.Search>()

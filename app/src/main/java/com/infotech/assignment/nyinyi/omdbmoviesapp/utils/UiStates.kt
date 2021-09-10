@@ -15,7 +15,7 @@ data class UiState(
     val pagingData: PagingData<Movie> = PagingData.empty()
 )
 
-public const val LAST_QUERY_SCROLLED: String = "last_query_scrolled"
-public const val LAST_SEARCH_QUERY: String = "last_search_query"
-public const val DEFAULT_QUERY = "Marvel"
-public const val DEFAULT_TYPE = "movie"
+const val LAST_QUERY_SCROLLED: String = "last_query_scrolled"
+const val LAST_SEARCH_QUERY: String = "last_search_query"
+const val DEFAULT_QUERY = "Marvel"
+const val DEFAULT_TYPE = "movie"

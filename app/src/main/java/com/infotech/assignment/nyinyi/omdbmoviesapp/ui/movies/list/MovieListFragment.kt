@@ -150,11 +150,13 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
                         ?.takeIf { it is LoadState.Error && adapter.itemCount > 0 }
                         ?: loadState.prepend
 
-                    val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
+                    val isListEmpty =
+                        loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
 
                     binding.errorTxt.isVisible = isListEmpty
                     binding.progress.isVisible = loadState.mediator?.refresh is LoadState.Loading
-                    binding.btnRetry.isVisible = loadState.mediator?.refresh is LoadState.Error && adapter.itemCount == 0
+                    binding.btnRetry.isVisible =
+                        loadState.mediator?.refresh is LoadState.Error && adapter.itemCount == 0
                     val errorState = loadState.source.append as? LoadState.Error
                         ?: loadState.source.prepend as? LoadState.Error
                         ?: loadState.append as? LoadState.Error

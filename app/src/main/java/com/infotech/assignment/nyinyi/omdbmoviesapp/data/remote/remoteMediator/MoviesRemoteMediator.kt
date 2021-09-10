@@ -71,7 +71,7 @@ class MoviesRemoteMediator(
                     MediatorResult.Error(Throwable(apiResponse.error))
                 } else {
 
-                    val keys = moviesList?.map {
+                    val keys = moviesList.map {
                         RemoteKeys(
                             it.imdbID,
                             prevKey = prevKey,
@@ -104,7 +104,7 @@ class MoviesRemoteMediator(
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Movie>): RemoteKeys? {
-        return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
+        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { movie ->
                 db.remoteKeysDao.remoteKeysByMovieId(movie.imdbID)
             }

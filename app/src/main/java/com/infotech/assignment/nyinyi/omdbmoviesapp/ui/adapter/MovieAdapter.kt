@@ -39,7 +39,11 @@ class MovieAdapter(private val clicked: (Movie) -> Unit) :
 
                 val multi = MultiTransformation<Bitmap>(
                     CenterCrop(),
-                    RoundedCornersTransformation(20, 16, RoundedCornersTransformation.CornerType.ALL)
+                    RoundedCornersTransformation(
+                        20,
+                        16,
+                        RoundedCornersTransformation.CornerType.ALL
+                    )
                 )
 
                 it.title.text = data?.title
@@ -62,8 +66,7 @@ class MovieAdapter(private val clicked: (Movie) -> Unit) :
                 }
 
                 it.root.setOnClickListener {
-                    data?.let {
-                        it1 ->
+                    data?.let { it1 ->
                         clicked.invoke(it1)
                     }
                 }

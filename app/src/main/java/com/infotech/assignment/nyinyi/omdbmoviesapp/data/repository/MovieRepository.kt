@@ -40,7 +40,8 @@ class MovieRepository @Inject constructor(
         ).flow
     }
 
-    suspend fun getMovieDetail(imdbId: String) = moviesApi.getMovieDetail(BuildConfig.API_KEY, imdbId)
+    suspend fun getMovieDetail(imdbId: String) =
+        moviesApi.getMovieDetail(BuildConfig.API_KEY, imdbId)
 
     companion object {
         private const val NETWORK_PAGE_SIZE = 10

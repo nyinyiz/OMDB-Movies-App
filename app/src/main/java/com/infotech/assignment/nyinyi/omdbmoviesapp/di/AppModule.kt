@@ -59,5 +59,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePrefs(@ApplicationContext context: Context) = Prefs(PreferenceManager.getDefaultSharedPreferences(context))
+    fun providePrefs(@ApplicationContext context: Context) =
+        Prefs(PreferenceManager.getDefaultSharedPreferences(context))
 }
